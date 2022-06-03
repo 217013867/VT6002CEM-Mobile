@@ -9,7 +9,7 @@
         android:id="@+id/FirstFragment"
         android:name="com.example.vt6002cem.Login"
         android:label="@string/login_label"
-        tools:layout="@layout/login">
+        tools:layout="@layout/fragment_login">
 
         <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"

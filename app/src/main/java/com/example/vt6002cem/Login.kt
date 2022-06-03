@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.vt6002cem.databinding.LoginBinding
+import com.example.vt6002cem.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -16,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
  */
 class Login : Fragment() {
 
-    private var _binding: LoginBinding? = null
+    private var _binding: FragmentLoginBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -28,7 +28,7 @@ class Login : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = LoginBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         return binding.root
     }
