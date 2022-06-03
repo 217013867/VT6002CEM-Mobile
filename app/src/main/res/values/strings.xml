@@ -3,6 +3,7 @@
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="login_label">Login</string>
+    <string name="Register_label">Register</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="submit">Submit</string>
     <string name="previous">Previous</string>
@@ -20,5 +21,6 @@
     <string name="register_btn">Register</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_here">Login Here</string>
 
 </resources>
