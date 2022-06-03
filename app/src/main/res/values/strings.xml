@@ -29,5 +29,6 @@
 
     <!-- Strings used for logout -->
     <string name="logout">Logout</string>
+    <string name="username">Username</string>
 
 </resources>
