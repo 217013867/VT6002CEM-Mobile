@@ -7,9 +7,16 @@
     <string name="submit">Submit</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="email_placeholder">Email</string>
+    <string name="password_placeholder">Password</string>
+
+    <!-- Strings used for login -->
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="login_email_placeholder">Email</string>
-    <string name="login_password_placeholder">Password</string>
     <string name="login_title">Login</string>
+    <string name="login_btn">Login</string>
+
+    <!-- Strings used for register -->
+    <string name="register_title">Register</string>
+    <string name="register_btn">Register</string>
+
 </resources>

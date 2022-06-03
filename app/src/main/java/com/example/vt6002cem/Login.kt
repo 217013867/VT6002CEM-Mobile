@@ -1,5 +1,6 @@
 package com.example.vt6002cem
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,10 +29,9 @@ class Login : Fragment() {
     ): View? {
 
         _binding = LoginBinding.inflate(inflater, container, false)
+
         return binding.root
-
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +39,10 @@ class Login : Fragment() {
         binding.buttonFirst.setOnClickListener {
             // connect to firebase
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
+        binding.tvRegisterHere.setOnClickListener { view ->
+            startActivity(Intent(requireContext(), RegisterActivity::class.java))
         }
     }
 

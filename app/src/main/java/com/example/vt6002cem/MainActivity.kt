@@ -1,6 +1,5 @@
 package com.example.vt6002cem
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -40,13 +39,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        val user = mAuth.currentUser
-        if (user == null) {
-            startActivity(Intent(this@MainActivity, Login::class.java))
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        val user = mAuth.currentUser
+//        if (user == null) {
+//            startActivity(Intent(this@MainActivity, Login::class.java))
+//        }
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
