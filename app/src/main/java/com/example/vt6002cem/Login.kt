@@ -1,6 +1,5 @@
 package com.example.vt6002cem
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +26,7 @@ class Login : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        mAuth = FirebaseAuth.getInstance();
 
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
@@ -42,7 +42,7 @@ class Login : Fragment() {
         }
 
         binding.tvRegisterHere.setOnClickListener { view ->
-            startActivity(Intent(requireContext(), RegisterActivity::class.java))
+            findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
         }
     }
 
