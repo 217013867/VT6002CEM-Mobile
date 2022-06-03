@@ -61,11 +61,9 @@ class Register : Fragment() {
         val password = binding.editTextTextPassword.text.toString()
 
         if (TextUtils.isEmpty(email)) {
-//            etRegEmail.setError("Email cannot be empty")
-//            etRegEmail.requestFocus()
+            Toast.makeText(requireActivity(), "Email cannot be empty", Toast.LENGTH_SHORT).show()
         } else if (TextUtils.isEmpty(password)) {
-//            etRegPassword.setError("Password cannot be empty")
-//            etRegPassword.requestFocus()
+            Toast.makeText(requireActivity(), "Password cannot be empty", Toast.LENGTH_SHORT).show()
         } else {
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
