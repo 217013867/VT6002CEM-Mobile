@@ -6,14 +6,14 @@
             app:startDestination="@id/FirstFragment">
 
     <fragment
-            android:id="@+id/FirstFragment"
-            android:name="com.example.vt6002cem.FirstFragment"
-            android:label="@string/first_fragment_label"
-            tools:layout="@layout/fragment_first">
+        android:id="@+id/FirstFragment"
+        android:name="com.example.vt6002cem.Login"
+        android:label="@string/login_label"
+        tools:layout="@layout/login">
 
         <action
-                android:id="@+id/action_FirstFragment_to_SecondFragment"
-                app:destination="@id/SecondFragment"/>
+            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment" />
     </fragment>
     <fragment
             android:id="@+id/SecondFragment"
