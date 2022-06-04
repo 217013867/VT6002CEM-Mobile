@@ -24,7 +24,7 @@
     <string name="login_here">Login Here</string>
     <string name="title_activity_home">Home</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_map">Map</string>
     <string name="title_notifications">Notifications</string>
 
     <!-- Strings used for logout -->

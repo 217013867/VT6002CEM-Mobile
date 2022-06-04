@@ -1,5 +1,6 @@
 package com.example.vt6002cem
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -11,15 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.vt6002cem.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.logging.HttpLoggingInterceptor
-import okio.Buffer
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
 import java.time.Instant
+import java.util.*
 
 
 /**
@@ -29,13 +28,13 @@ import java.time.Instant
  */
 class Register : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
-
+    private val db = Firebase.firestore
     private lateinit var mAuth: FirebaseAuth
     private val binding get() = _binding!!
-    private val JSON = "application/json; charset=utf-8".toMediaType()
-    private val client = OkHttpClient().newBuilder()
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
-        .build()
+    private val mediaType = "application/json; charset=utf-8".toMediaType()
+    private val client = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+        .protocols(Arrays.asList(Protocol.HTTP_1_1)).build()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,77 +77,21 @@ class Register : Fragment() {
             Toast.makeText(requireActivity(), "Password cannot be empty", Toast.LENGTH_SHORT).show()
         } else {
             // insert record into mongodb
-            val jsonObject = JSONObject()
-            try {
-                jsonObject.put("dataSource", "Cluster1")
-                jsonObject.put("database", "FishApp")
-                jsonObject.put("collection", "users")
 
-                val documentObject = JSONObject()
-                documentObject.put("username", username)
-                val dateObject = JSONObject()
-                val numberLongObject = JSONObject()
-
-                numberLongObject.put("\$numberLong", unixTime.toString())
-                dateObject.put("\$date", numberLongObject)
-                documentObject.put("createTime", dateObject)
-                jsonObject.put("document", documentObject)
-            } catch (e: JSONException) {
-                e.printStackTrace()
-            }
-
-            Log.d("RequestBody", jsonObject.toString())
-
-            val requestBody = jsonObject.toString().toRequestBody(JSON)
-
-            val request: Request = Request.Builder()
-                .url("https://data.mongodb-api.com/app/data-grmrc/endpoint/data/v1/action/insertOne")
-                .method("POST", requestBody)
-                .addHeader(
-                    "api-key",
-                    "VgP7ObwftcYymjetp5C5LVyqBgbWDSrETQ4njGISc7WyLi4tqG2WiOB7QLTaWpiD"
-                )
-                .addHeader("Content-Type", "application/json")
-                .build()
-
-//
-
-            val buffer = Buffer()
-            request.body?.writeTo(buffer)
-            Log.d(">>>>", buffer.readUtf8().toString())
-
-            client.newCall(request).enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-                    e.printStackTrace()
+            val user = hashMapOf(
+                "username" to username,
+                "email" to email,
+                "createTime" to unixTime
+            )
+            // Add a new document with a generated ID
+            db.collection("users")
+                .add(user)
+                .addOnSuccessListener { documentReference ->
+                    Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                 }
-
-                override fun onResponse(call: Call, response: Response) {
-                    response.use {
-                        if (!response.isSuccessful) throw IOException("Unexpected code $response")
-
-                        for ((name, value) in response.headers) {
-                            Log.d(name, value)
-                        }
-
-                        Log.d(response.body!!.string(), "<<<")
-                    }
+                .addOnFailureListener { e ->
+                    Log.w(TAG, "Error adding document", e)
                 }
-            })
-
-            // 執行Call連線到網址
-//            call.enqueue(object : Callback {
-//                @Throws(IOException::class)
-//                override fun onResponse(call: Call?, response: Response) {
-//                    // 連線成功
-//                    val result = response.body()!!.string()
-//                    Log.d("OkHttp result", result)
-//                }
-//
-//                override fun onFailure(call: Call?, e: IOException?) {
-//                    // 連線失敗
-//                    Log.e("OkHttp error", e.toString())
-//                }
-//            })
 
             // create user in firebase
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
