@@ -20,12 +20,16 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class MapsFragment : Fragment() {
 
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    private lateinit var fishingPoint: <Object>
 
     private var map: GoogleMap? = null
 
@@ -54,6 +58,22 @@ class MapsFragment : Fragment() {
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        val db = Firebase.firestore
+
+        db.collection("fishing-point")
+            .get()
+            .addOnSuccessListener { result ->
+                fishingPoint = result
+                for (document in result) {
+                    Log.d(TAG, "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
+
+
     }
 
     override fun onCreateView(
@@ -162,9 +182,12 @@ class MapsFragment : Fragment() {
          * cases when a location is not available.
          */
         try {
+            Log.d("locationPermissionGranted", locationPermissionGranted.toString())
             if (locationPermissionGranted) {
                 val locationResult = fusedLocationProviderClient.lastLocation
                 locationResult.addOnCompleteListener(requireActivity()) { task ->
+                    Log.d("task.isSuccessful", task.isSuccessful.toString())
+                    Log.d("task", task.toString())
                     if (task.isSuccessful) {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
@@ -191,6 +214,13 @@ class MapsFragment : Fragment() {
                         map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 }
+            } else {
+                Log.d("Not Granted", "")
+                map?.moveCamera(
+                    CameraUpdateFactory
+                        .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
+                )
+                map?.uiSettings?.isMyLocationButtonEnabled = false
             }
         } catch (e: SecurityException) {
             Log.e("Exception: %s", e.message, e)
@@ -204,6 +234,6 @@ class MapsFragment : Fragment() {
     }
 
     companion object {
-        private const val DEFAULT_ZOOM = 15
+        private const val DEFAULT_ZOOM = 10
     }
 }
