@@ -1,0 +1,152 @@
+[
+  {
+    "English_Name": "Kowloon Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.35422,
+    "Longitude": 114.153178
+  },
+  {
+    "English_Name": "Kowloon Byewash Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.3498661,
+    "Longitude": 114.1454242
+  },
+  {
+    "English_Name": "Kowloon Reception Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.3501756,
+    "Longitude": 114.1440717
+  },
+  {
+    "English_Name": "Tai Tam Upper Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.2579269,
+    "Longitude": 114.2095085
+  },
+  {
+    "English_Name": "Tai Tam Byewash Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.2558456,
+    "Longitude": 114.2077044
+  },
+  {
+    "English_Name": "Tai Tam Intermediate Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.2460211,
+    "Longitude": 114.207398
+  },
+  {
+    "English_Name": "Tai Tam Tuk Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.245988,
+    "Longitude": 114.2135139
+  },
+  {
+    "English_Name": "Tai Lam Chung Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.3844276,
+    "Longitude": 114.0229295
+  },
+  {
+    "English_Name": "Shing Mun Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.3873717,
+    "Longitude": 114.1399469
+  },
+  {
+    "English_Name": "Lower Shing Mun Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.3748328,
+    "Longitude": 114.1529679
+  },
+  {
+    "English_Name": "Aberdeen Upper Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.2597441,
+    "Longitude": 114.164871
+  },
+  {
+    "English_Name": "Aberdeen Lower Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.2546872,
+    "Longitude": 114.1597797
+  },
+  {
+    "English_Name": "Shek Pik Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.233558,
+    "Longitude": 113.8887885
+  },
+  {
+    "English_Name": "Plover Cove Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.4621711,
+    "Longitude": 114.2386511
+  },
+  {
+    "English_Name": "Shek Lei Pui Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.3555019,
+    "Longitude": 114.1463094
+  },
+  {
+    "English_Name": "Pok Fu Lam Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.2652231,
+    "Longitude": 114.137012
+  },
+  {
+    "English_Name": "High Island Reservoir",
+    "Type": "Reservoir",
+    "Latitude": 22.3775096,
+    "Longitude": 114.3352229
+  },
+  {
+    "English_Name": "Hok Tau Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.49879,
+    "Longitude": 114.17898
+  },
+  {
+    "English_Name": "Lau Shui Heung Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.50387,
+    "Longitude": 114.16733
+  },
+  {
+    "English_Name": "Tsing Tam Upper Irrigation Reservoir / Tsing Tam Lower Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.416233,
+    "Longitude": 114.085441
+  },
+  {
+    "English_Name": "Ho Pui Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.36897,
+    "Longitude": 114.1151
+  },
+  {
+    "English_Name": "Wong Nai Tun Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.39994,
+    "Longitude": 1114.0147
+  },
+  {
+    "English_Name": "Hung Shui Hang Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.41261,
+    "Longitude": 113.99589
+  },
+  {
+    "English_Name": "Lam Tei Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.40962,
+    "Longitude": 113.9881
+  },
+  {
+    "English_Name": "Shap Long Irrigation Reservoir",
+    "Type": "Irrigation Reservoir",
+    "Latitude": 22.23373,
+    "Longitude": 113.99971
+  }
+]
