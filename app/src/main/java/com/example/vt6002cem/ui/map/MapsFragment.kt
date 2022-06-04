@@ -20,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -28,8 +29,6 @@ class MapsFragment : Fragment() {
 
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
-    private lateinit var fishingPoint: <Object>
 
     private var map: GoogleMap? = null
 
@@ -45,6 +44,28 @@ class MapsFragment : Fragment() {
     private val callback = OnMapReadyCallback { googleMap: GoogleMap ->
         this.map = googleMap
 
+        val db = Firebase.firestore
+
+        db.collection("fishing-point")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val geo = document.getGeoPoint("location")
+
+                    if (geo != null) {
+                        googleMap.addMarker(
+                            MarkerOptions()
+                                .position(LatLng(geo.latitude, geo.longitude))
+                                .title(document.get("name").toString())
+                        )
+                    }
+                    Log.d("FISHING POINT", "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents.", exception)
+            }
+
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI()
 
@@ -58,21 +79,6 @@ class MapsFragment : Fragment() {
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
-
-        val db = Firebase.firestore
-
-        db.collection("fishing-point")
-            .get()
-            .addOnSuccessListener { result ->
-                fishingPoint = result
-                for (document in result) {
-                    Log.d(TAG, "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
-
 
     }
 
@@ -182,7 +188,7 @@ class MapsFragment : Fragment() {
          * cases when a location is not available.
          */
         try {
-            Log.d("locationPermissionGranted", locationPermissionGranted.toString())
+            Log.d("locationPermissionGrant", locationPermissionGranted.toString())
             if (locationPermissionGranted) {
                 val locationResult = fusedLocationProviderClient.lastLocation
                 locationResult.addOnCompleteListener(requireActivity()) { task ->
