@@ -20,8 +20,9 @@
         android:id="@+id/button_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
         android:text="Select"
-        tools:layout_editor_absoluteX="67dp"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="381dp" />
 
     <Button
@@ -29,8 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Predict"
-        tools:layout_editor_absoluteX="210dp"
-        tools:layout_editor_absoluteY="381dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="463dp" />
 
     <TextView
         android:id="@+id/textView_predict"
@@ -40,6 +42,18 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.721" />
+
+    <Button
+        android:id="@+id/button_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="Camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_select"
+        tools:layout_editor_absoluteY="381dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
