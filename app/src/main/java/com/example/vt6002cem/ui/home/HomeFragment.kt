@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
     private lateinit var text_view: TextView
     private lateinit var bitmap: Bitmap
     private lateinit var camerabtn: Button
+    private var cameraPermissionGranted: Boolean = false
 
     private var _binding: FragmentHomeBinding? = null
 
@@ -42,23 +43,27 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     fun checkAndGetPermissions() {
+        /*
+ * Request camera permission, so that we can use camera of the
+ * device. The result of the permission request is handled by a callback,
+ * onRequestPermissionsResult.
+ */
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.CAMERA
             )
             == PackageManager
                 .PERMISSION_GRANTED
-
         ) {
             // When permission is granted
-            locationPermissionGranted = true
+            cameraPermissionGranted = true
         } else {
             // When permission is not granted
             // Call method
             requestPermissions(
                 arrayOf(
                     Manifest.permission
-                        .ACCESS_COARSE_LOCATION
+                        .CAMERA
                 ), 100
             );
         }
