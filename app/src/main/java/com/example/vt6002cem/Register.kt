@@ -1,5 +1,4 @@
 package com.example.vt6002cem
-
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.TextUtils
@@ -14,9 +13,6 @@ import com.example.vt6002cem.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.logging.HttpLoggingInterceptor
 import java.time.Instant
 import java.util.*
 
@@ -31,10 +27,7 @@ class Register : Fragment() {
     private val db = Firebase.firestore
     private lateinit var mAuth: FirebaseAuth
     private val binding get() = _binding!!
-    private val mediaType = "application/json; charset=utf-8".toMediaType()
-    private val client = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-        .protocols(Arrays.asList(Protocol.HTTP_1_1)).build()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
