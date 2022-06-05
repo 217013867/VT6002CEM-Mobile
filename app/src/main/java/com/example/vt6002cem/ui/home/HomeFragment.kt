@@ -1,5 +1,6 @@
 package com.example.vt6002cem.ui.home
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -15,7 +16,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.vt6002cem.R
 import com.example.vt6002cem.databinding.FragmentHomeBinding
@@ -23,6 +24,7 @@ import com.example.vt6002cem.ml.MobilenetV110224Quant
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+
 
 class HomeFragment : Fragment() {
 
@@ -40,10 +42,25 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     fun checkAndGetPermissions() {
-        if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
-            requestPermissions(arrayOf(android.Manifest.permission.CAMERA), 100)
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.CAMERA
+            )
+            == PackageManager
+                .PERMISSION_GRANTED
+
+        ) {
+            // When permission is granted
+            locationPermissionGranted = true
         } else {
-            Toast.makeText(this, "Camera permission granted", Toast.LENGTH_SHORT).show()
+            // When permission is not granted
+            // Call method
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission
+                        .ACCESS_COARSE_LOCATION
+                ), 100
+            );
         }
     }
 
@@ -125,7 +142,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        content.addView(aboutPage);
+
 
         select_image_button = binding.buttonSelect
         make_prediction = binding.buttonPredict
@@ -137,7 +154,7 @@ class HomeFragment : Fragment() {
         checkAndGetPermissions()
 
         val labels =
-            application.assets.open("labels.txt").bufferedReader().use { it.readText() }.split("\n")
+            application.assets.open("label.txt").bufferedReader().use { it.readText() }.split("\n")
 
         select_image_button.setOnClickListener(View.OnClickListener {
             Log.d("mssg", "button pressed")
@@ -176,10 +193,9 @@ class HomeFragment : Fragment() {
             startActivityForResult(camera, 200)
         })
     }
-}
 
 
-override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
 
     if (requestCode == 250) {
@@ -212,5 +228,6 @@ fun getMax(arr: FloatArray): Int {
     return ind
 }
 }
+
 
 
