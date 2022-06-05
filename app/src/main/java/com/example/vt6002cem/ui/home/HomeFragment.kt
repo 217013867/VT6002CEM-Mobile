@@ -18,12 +18,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.vt6002cem.R
 import com.example.vt6002cem.databinding.FragmentHomeBinding
 import com.example.vt6002cem.ml.MobilenetV110224Quant
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStream
+import java.io.InputStreamReader
 
 
 class HomeFragment : Fragment() {
@@ -42,7 +45,7 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    fun checkAndGetPermissions() {
+    private fun checkAndGetPermissions() {
         /*
  * Request camera permission, so that we can use camera of the
  * device. The result of the permission request is handled by a callback,
@@ -64,7 +67,7 @@ class HomeFragment : Fragment() {
                 arrayOf(
                     Manifest.permission
                         .CAMERA
-                ), 100
+                ), 101
             );
         }
     }
@@ -75,7 +78,7 @@ class HomeFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 100) {
+        if (requestCode == 101) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(requireActivity(), "Camera permission granted", Toast.LENGTH_SHORT)
                     .show()
@@ -89,65 +92,16 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//        imgview = binding.imageView
-//
-//        val fileName = "label.txt"
-//
-//        val inputString = application.assets.open(fileName).bufferedReader().use { it.readText() }
-//
-//        var townList = inputString.split("\n")
-//
-//        var tv: TextView = findViewById(R.id.textView_predict)
-//
-//
-//        var select: Button = findViewById(R.id.button_select)
-//
-//        select.setOnClickListener(View.OnClickListener {
-//
-//            var intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-//            intent.type = "image/*"
-//
-//            startActivityForResult(intent, 100)
-//
-//
-//        })
-//        var predict: Button = binding.buttonPredict
-//        predict.setOnClickListener(View.OnClickListener {
-//            var resized: Bitmap = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
-//            val model = MobilenetV110224Quant.newInstance(this)
-//
-//// Creates inputs for reference.
-//            val inputFeature0 =
-//                TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.UINT8)
-//
-//            var tbuffer = TensorImage.fromBitmap(resized)
-//            var byteBuffer = tbuffer.buffer
-//            inputFeature0.loadBuffer(byteBuffer)
-//
-//// Runs model inference and gets result.
-//            val outputs = model.process(inputFeature0)
-//            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
-//
-//            var max = getMax(outputFeature0.floatArray)
-//
-//            tv.setText(townList[max].toString())
-//
-//// Releases model resources if no longer used.
-//            model.close()
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         select_image_button = binding.buttonSelect
         make_prediction = binding.buttonPredict
@@ -158,80 +112,101 @@ class HomeFragment : Fragment() {
         // handling permissions
         checkAndGetPermissions()
 
-        val labels =
-            application.assets.open("label.txt").bufferedReader().use { it.readText() }.split("\n")
+        var data = ""
+        val assetManager = requireContext().resources.assets
+        var inputStream: InputStream? = null
+        lateinit var labels: List<String>
+
+        try {
+            inputStream = assetManager.open("label.txt")
+            val buf = StringBuilder()
+            val `in` = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+            var str: String?
+            while (`in`.readLine().also { str = it } != null) {
+                buf.append(str)
+            }
+            `in`.close()
+            data = buf.toString()
+            Log.d("data!!!!!!", data)
+            labels = data.split(":")
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
 
         select_image_button.setOnClickListener(View.OnClickListener {
             Log.d("mssg", "button pressed")
-            var intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
+            val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
 
             startActivityForResult(intent, 250)
         })
 
         make_prediction.setOnClickListener(View.OnClickListener {
-            var resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
-            val model = MobilenetV110224Quant.newInstance(this)
+            val resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
+            val model = MobilenetV110224Quant.newInstance(requireActivity())
 
-            var tbuffer = TensorImage.fromBitmap(resized)
-            var byteBuffer = tbuffer.buffer
+            val tbuffer = TensorImage.fromBitmap(resized)
+            val byteBuffer = tbuffer.buffer
 
-// Creates inputs for reference.
+            // Creates inputs for reference.
             val inputFeature0 =
                 TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.UINT8)
             inputFeature0.loadBuffer(byteBuffer)
 
-// Runs model inference and gets result.
+            // Runs model inference and gets result.
             val outputs = model.process(inputFeature0)
             val outputFeature0 = outputs.outputFeature0AsTensorBuffer
 
-            var max = getMax(outputFeature0.floatArray)
+            val max = getMax(outputFeature0.floatArray)
 
-            text_view.setText(labels[max])
+            Log.d("labels", labels.toString())
+            Log.d("max", max.toString())
+            text_view.text = labels[max]
 
-// Releases model resources if no longer used.
+            // Releases model resources if no longer used.
             model.close()
         })
 
         camerabtn.setOnClickListener(View.OnClickListener {
-            var camera: Intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+            val camera: Intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(camera, 200)
-        })
+        }
+        )
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-    super.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
 
-    if (requestCode == 250) {
-        img_view.setImageURI(data?.data)
+        if (requestCode == 250) {
+            img_view.setImageURI(data?.data)
 
-        var uri: Uri? = data?.data
-        bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-    } else if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
-        bitmap = data?.extras?.get("data") as Bitmap
-        img_view.setImageBitmap(bitmap)
-    }
-
-}
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
-
-fun getMax(arr: FloatArray): Int {
-    var ind = 0
-    var min = 0.0f
-
-    for (i in 0..1000) {
-        if (arr[i] > min) {
-            ind = i
-            min = arr[i]
+            val uri: Uri? = data?.data
+            bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+        } else if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
+            bitmap = data?.extras?.get("data") as Bitmap
+            img_view.setImageBitmap(bitmap)
         }
+
     }
-    return ind
-}
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    fun getMax(arr: FloatArray): Int {
+        var ind = 0
+        var min = 0.0f
+
+        for (i in 0..1000) {
+            if (arr[i] > min) {
+                ind = i
+                min = arr[i]
+            }
+        }
+        return ind
+    }
 }
 
 
