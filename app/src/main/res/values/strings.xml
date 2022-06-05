@@ -34,5 +34,7 @@
     <string name="camera">Camera</string>
     <string name="predict">Predict</string>
     <string name="select">Select</string>
+    <string name="biometric_status">Status</string>
+    <string name="bio_btn">Bio Login</string>
 
 </resources>
