@@ -27,6 +27,8 @@ import com.google.firebase.ktx.Firebase
 
 class MapsFragment : Fragment() {
 
+    var mGoogleMap: GoogleMap? = null
+
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -198,8 +200,9 @@ class MapsFragment : Fragment() {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
 
-                        Log.d("LOCATION: ", lastKnownLocation.toString())
 
+
+                        Log.d("LOCATION: ", lastKnownLocation.toString())
                         if (lastKnownLocation != null) {
                             map?.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
