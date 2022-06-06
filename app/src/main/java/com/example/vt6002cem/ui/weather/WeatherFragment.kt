@@ -1,4 +1,4 @@
-package com.example.vt6002cem.ui.notifications
+package com.example.vt6002cem.ui.weather
 
 
 import android.os.Bundle
@@ -10,14 +10,14 @@ import androidx.fragment.app.Fragment
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.vt6002cem.databinding.FragmentNotificationsBinding
+import com.example.vt6002cem.databinding.FragmentWeatherBinding
 import com.squareup.picasso.Picasso
 import org.json.JSONException
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NotificationsFragment : Fragment() {
+class WeatherFragment : Fragment() {
 
 
     private lateinit var editText: EditText
@@ -38,7 +38,7 @@ class NotificationsFragment : Fragment() {
     private lateinit var min_temp: TextView
     private lateinit var feels: TextView
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentWeatherBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -46,7 +46,7 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        _binding = FragmentWeatherBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -125,12 +125,17 @@ class NotificationsFragment : Fragment() {
                         //find sunrise
                         val object5 = jsonObject.getJSONObject("sys")
                         val sunrise_find = object5.getString("sunrise")
-                        sunrise.text = "$sunrise_find  am"
+                        val sunrise_time = Date(sunrise_find.toLong() * 1000)
+                        val sunrise_txt =
+                            SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sunrise_time)
+                        sunrise.text = "$sunrise_txt UTC+8"
 
                         //find sunrise
                         val object6 = jsonObject.getJSONObject("sys")
                         val sunset_find = object6.getString("sunset")
-                        sunset.text = "$sunset_find  pm"
+                        val sunset_time = Date(sunset_find.toLong() * 1000)
+                        val sunset_txt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sunset_time)
+                        sunset.text = "$sunset_txt UTC+8"
 
                         //find pressure
                         val object7 = jsonObject.getJSONObject("main")

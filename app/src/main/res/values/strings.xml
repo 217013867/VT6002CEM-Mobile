@@ -25,7 +25,7 @@
     <string name="title_activity_home">Home</string>
     <string name="title_home">Home</string>
     <string name="title_map">Map</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_weather">Weather</string>
 
     <!-- Strings used for logout -->
     <string name="logout">Logout</string>
