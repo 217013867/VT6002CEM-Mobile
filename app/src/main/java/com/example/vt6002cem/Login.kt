@@ -59,7 +59,6 @@ class Login : Fragment() {
 
         biometricPrompt = BiometricPrompt(requireActivity(), executor,
             object : BiometricPrompt.AuthenticationCallback() {
-
                 override fun onAuthenticationError(
                     errorCode: Int,
                     errString: CharSequence

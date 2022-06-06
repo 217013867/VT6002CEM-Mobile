@@ -145,6 +145,7 @@ class MapsFragment : Fragment() {
         if (requestCode == 100 && grantResults.isNotEmpty()
             && (grantResults[0] + grantResults[1]
                     == PackageManager.PERMISSION_GRANTED)
+
         ) {
             // When permission are granted
             locationPermissionGranted = true
@@ -160,6 +161,7 @@ class MapsFragment : Fragment() {
                 .show()
         }
     }
+
 
     @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
