@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.vt6002cem.ui.home.HomeFragment"
+        android:name="com.example.fishing.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.example.vt6002cem.ui.map.MapsFragment"
+        android:name="com.example.fishing.ui.map.MapsFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_maps" />
 
     <fragment
         android:id="@+id/navigation_weather"
-        android:name="com.example.vt6002cem.ui.weather.WeatherFragment"
+        android:name="com.example.fishing.ui.weather.WeatherFragment"
         android:label="@string/title_weather"
         tools:layout="@layout/fragment_weather" />
 

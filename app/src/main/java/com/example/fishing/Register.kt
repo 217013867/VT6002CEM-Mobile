@@ -1,4 +1,4 @@
-package com.example.vt6002cem
+package com.example.fishing
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.TextUtils
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.vt6002cem.databinding.FragmentRegisterBinding
+import com.example.fishing.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

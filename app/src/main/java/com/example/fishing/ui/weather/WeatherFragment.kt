@@ -1,4 +1,4 @@
-package com.example.vt6002cem.ui.weather
+package com.example.fishing.ui.weather
 
 
 import android.os.Bundle
@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.vt6002cem.databinding.FragmentWeatherBinding
+import com.example.fishing.databinding.FragmentWeatherBinding
 import com.squareup.picasso.Picasso
 import org.json.JSONException
 import org.json.JSONObject

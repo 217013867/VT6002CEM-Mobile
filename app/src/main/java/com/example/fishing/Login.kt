@@ -1,4 +1,4 @@
-package com.example.vt6002cem
+package com.example.fishing
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,7 +14,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.vt6002cem.databinding.FragmentLoginBinding
+import com.example.fishing.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
 import java.util.concurrent.Executor
 

@@ -1,4 +1,4 @@
-package com.example.vt6002cem.ui.home
+package com.example.fishing.ui.home
 
 import android.Manifest
 import android.app.Activity
@@ -18,8 +18,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.example.vt6002cem.databinding.FragmentHomeBinding
-import com.example.vt6002cem.ml.MobilenetV110224Quant
+import com.example.fishing.databinding.FragmentHomeBinding
+import com.example.fishing.ml.MobilenetV110224Quant
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer

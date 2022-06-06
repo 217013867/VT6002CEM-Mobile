@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.vt6002cem">
+    package="com.example.fishing">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.VT6002CEM">
+        android:theme="@style/Theme.fishing">
 
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -34,17 +34,17 @@
             android:value="AIzaSyAfOPps63DNmoQ8ZeNx-i40t7i4ujGwyL4" />
 
         <activity
-            android:name=".Home"
+            android:name="com.example.fishing.Home"
             android:exported="false"
             android:label="@string/title_activity_home" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.fishing.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.VT6002CEM.NoActionBar">
+            android:theme="@style/Theme.fishing.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
