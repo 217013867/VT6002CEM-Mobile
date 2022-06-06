@@ -36,5 +36,6 @@
     <string name="select">Select</string>
     <string name="biometric_status">Status</string>
     <string name="bio_btn">Bio Login</string>
+    <string name="weather_app">Weather</string>
 
 </resources>
