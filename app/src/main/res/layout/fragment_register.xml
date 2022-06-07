@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gifbackground"
     tools:context=".Register">
 
 
@@ -15,6 +16,7 @@
         android:textAlignment="center"
         android:textSize="34sp"
         android:textStyle="bold"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,6 +26,7 @@
         android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#00BCD4"
         android:text="@string/register_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +43,9 @@
         android:hint="@string/password_placeholder"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:textColor="#AFAFAF"
+        android:textColorHint="#AFAFAF"
+        android:textColorLink="#E4E2E2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +61,9 @@
         android:hint="@string/email_placeholder"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:textColor="#AFAFAF"
+        android:textColorHint="#AFAFAF"
+        android:textColorLink="#E4E2E2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -71,6 +80,9 @@
         android:hint="@string/username"
         android:inputType="text"
         android:minHeight="48dp"
+        android:textColor="#AFAFAF"
+        android:textColorHint="#AFAFAF"
+        android:textColorLink="#E4E2E2"
         app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -82,7 +94,6 @@
         android:id="@+id/tvLoginHere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_here"
         tools:layout_editor_absoluteX="168dp"
         tools:layout_editor_absoluteY="787dp" />
 
