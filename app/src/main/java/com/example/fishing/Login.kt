@@ -56,7 +56,6 @@ class Login : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         executor = ContextCompat.getMainExecutor(requireContext())

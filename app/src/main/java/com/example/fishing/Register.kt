@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.fishing.databinding.FragmentRegisterBinding
@@ -27,6 +28,11 @@ class Register : Fragment() {
     private val db = Firebase.firestore
     private lateinit var mAuth: FirebaseAuth
     private val binding get() = _binding!!
+
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
 
 
     override fun onCreateView(
