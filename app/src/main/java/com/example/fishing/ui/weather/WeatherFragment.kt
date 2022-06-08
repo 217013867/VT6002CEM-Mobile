@@ -17,6 +17,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class WeatherFragment : Fragment() {
 
 
@@ -168,7 +169,6 @@ class WeatherFragment : Fragment() {
             ) { error ->
                 Toast.makeText(requireActivity(), error.localizedMessage, Toast.LENGTH_SHORT).show()
             }
-
 
             val requestQueue = Volley.newRequestQueue(requireActivity())
             requestQueue.add(stringRequest)
