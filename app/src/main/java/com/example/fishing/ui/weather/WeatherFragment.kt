@@ -22,7 +22,7 @@ class WeatherFragment : Fragment() {
 
 
     private lateinit var editText: EditText
-    private lateinit var button: Button
+    private lateinit var searchButton: Button
     private lateinit var imageView: ImageView
     private lateinit var temptv: TextView
     private lateinit var time: TextView
@@ -55,10 +55,10 @@ class WeatherFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         editText = binding.editTextTextPersonName
-        button = binding.button
+        searchButton = binding.searchButton
         imageView = binding.imageView
-        temptv = binding.textView3
-        time = binding.textView2
+        temptv = binding.temptv
+        time = binding.time
         longitude = binding.longitude
         latitude = binding.latitude
         humidity = binding.humidity
@@ -72,7 +72,7 @@ class WeatherFragment : Fragment() {
         min_temp = binding.minTemp
         feels = binding.feels
 
-        button.setOnClickListener {
+        searchButton.setOnClickListener {
             val city = editText.text.toString()
             val url =
                 "http://api.openweathermap.org/data/2.5/weather?q=$city&appid=462f445106adc1d21494341838c10019&units=metric"
