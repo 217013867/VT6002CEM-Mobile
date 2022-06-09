@@ -1,4 +1,5 @@
 package com.example.fishing
+
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.TextUtils
@@ -52,21 +53,28 @@ class Register : Fragment() {
 
         Log.i("MyActivity", "MyClass.getView() — get item number")
         binding.registerBtn.setOnClickListener { view ->
-            createUser()
-        }
+            val username = binding.editTextTextUsername.text.toString()
+            val email = binding.editTextTextEmailAddress.text.toString()
+            val password = binding.editTextTextPassword.text.toString()
 
+            if (validate(email, "email")) {
+                createUser(username, email, password)
+            } else {
+                Toast.makeText(requireActivity(), "Email Invalid", Toast.LENGTH_SHORT).show()
+            }
+        }
         binding.tvLoginHere.setOnClickListener { view ->
             findNavController().navigate(R.id.action_RegisterFragment_to_LoginFragment)
         }
     }
 
-    private fun createUser() {
+    /**
+     *
+     */
+    private fun createUser(username: String, email: String, password: String) {
         val unixTime: String = Instant.now().getEpochSecond().toString()
 
         println(binding.editTextTextEmailAddress.text)
-        val username = binding.editTextTextUsername.text.toString()
-        val email = binding.editTextTextEmailAddress.text.toString()
-        val password = binding.editTextTextPassword.text.toString()
 
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(requireActivity(), "Username cannot be empty", Toast.LENGTH_SHORT).show()
@@ -110,6 +118,15 @@ class Register : Fragment() {
                     ).show()
                 }
             }
+        }
+    }
+
+    private fun validate(text: String, type: String): Boolean {
+        if (type === "email") {
+            return !TextUtils.isEmpty(text) && android.util.Patterns.EMAIL_ADDRESS.matcher(text)
+                .matches();
+        } else {
+            return false
         }
     }
 }

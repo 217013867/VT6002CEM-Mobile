@@ -87,8 +87,8 @@ class WeatherFragment : Fragment() {
                         temptv.text = "Temperature\n$temp°C"
 
                         //find country
-                        val object8 = jsonObject.getJSONObject("sys")
-                        val count = object8.getString("country")
+                        val countrycode = jsonObject.getJSONObject("sys")
+                        val count = countrycode.getString("country")
                         country.text = "$count  :"
 
                         //find city
@@ -109,58 +109,58 @@ class WeatherFragment : Fragment() {
                         time.text = date
 
                         //find latitude
-                        val object2 = jsonObject.getJSONObject("coord")
-                        val lat_find = object2.getDouble("lat")
+                        val object_latitude = jsonObject.getJSONObject("coord")
+                        val lat_find = object_latitude.getDouble("lat")
                         latitude.text = "$lat_find°  N"
 
                         //find longitude
-                        val object3 = jsonObject.getJSONObject("coord")
-                        val long_find = object3.getDouble("lon")
+                        val object_longitude = jsonObject.getJSONObject("coord")
+                        val long_find = object_longitude.getDouble("lon")
                         longitude.text = "$long_find°  E"
 
                         //find humidity
-                        val object4 = jsonObject.getJSONObject("main")
-                        val humidity_find = object4.getInt("humidity")
+                        val object_humidity = jsonObject.getJSONObject("main")
+                        val humidity_find = object_humidity.getInt("humidity")
                         humidity.text = "$humidity_find  %"
 
                         //find sunrise
-                        val object5 = jsonObject.getJSONObject("sys")
-                        val sunrise_find = object5.getString("sunrise")
+                        val object_sunrise = jsonObject.getJSONObject("sys")
+                        val sunrise_find = object_sunrise.getString("sunrise")
                         val sunrise_time = Date(sunrise_find.toLong() * 1000)
                         val sunrise_txt =
                             SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sunrise_time)
                         sunrise.text = "$sunrise_txt UTC+8"
 
-                        //find sunrise
-                        val object6 = jsonObject.getJSONObject("sys")
-                        val sunset_find = object6.getString("sunset")
+                        //find sunset
+                        val object_sunset = jsonObject.getJSONObject("sys")
+                        val sunset_find = object_sunset.getString("sunset")
                         val sunset_time = Date(sunset_find.toLong() * 1000)
                         val sunset_txt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(sunset_time)
                         sunset.text = "$sunset_txt UTC+8"
 
                         //find pressure
-                        val object7 = jsonObject.getJSONObject("main")
-                        val pressure_find = object7.getString("pressure")
+                        val object_pressure = jsonObject.getJSONObject("main")
+                        val pressure_find = object_pressure.getString("pressure")
                         pressure.text = "$pressure_find  hPa"
 
                         //find wind speed
-                        val object9 = jsonObject.getJSONObject("wind")
-                        val wind_find = object9.getString("speed")
+                        val object_wind = jsonObject.getJSONObject("wind")
+                        val wind_find = object_wind.getString("speed")
                         wind.text = "$wind_find  km/h"
 
                         //find min temperature
-                        val object10 = jsonObject.getJSONObject("main")
-                        val mintemp = object10.getDouble("temp_min")
+                        val object_min = jsonObject.getJSONObject("main")
+                        val mintemp = object_min.getDouble("temp_min")
                         min_temp.text = "Min Temp\n$mintemp °C"
 
                         //find max temperature
-                        val object12 = jsonObject.getJSONObject("main")
-                        val maxtemp = object12.getDouble("temp_max")
+                        val object_max = jsonObject.getJSONObject("main")
+                        val maxtemp = object_max.getDouble("temp_max")
                         max_temp.text = "Max Temp\n$maxtemp °C"
 
                         //find feels
-                        val object13 = jsonObject.getJSONObject("main")
-                        val feels_find = object13.getDouble("feels_like")
+                        val object_feel = jsonObject.getJSONObject("main")
+                        val feels_find = object_feel.getDouble("feels_like")
                         feels.text = "$feels_find °C"
                     } catch (e: JSONException) {
                         e.printStackTrace()

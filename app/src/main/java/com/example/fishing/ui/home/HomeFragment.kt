@@ -28,7 +28,9 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 
-
+/**
+ *
+ */
 class HomeFragment : Fragment() {
 
     private lateinit var select_image_button: Button
@@ -45,6 +47,9 @@ class HomeFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    /**
+     *
+     */
     private fun checkAndGetPermissions() {
         /*
  * Request camera permission, so that we can use camera of the
@@ -72,6 +77,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     *
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -88,6 +96,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     *
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -99,7 +110,9 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
-
+    /**
+     *
+     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -174,7 +187,9 @@ class HomeFragment : Fragment() {
         )
     }
 
-
+    /**
+     *
+     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -190,11 +205,17 @@ class HomeFragment : Fragment() {
 
     }
 
+    /**
+     *
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    /**
+     *
+     */
     fun getMax(arr: FloatArray): Int {
         var ind = 0
         var min = 0.0f

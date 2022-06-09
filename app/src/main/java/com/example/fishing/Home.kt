@@ -64,6 +64,7 @@ class Home : AppCompatActivity() {
         }
     }
 
+
     private fun logout() {
         mAuth.signOut()
     }

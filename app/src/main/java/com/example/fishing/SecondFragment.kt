@@ -19,9 +19,12 @@ class SecondFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    /**
+     *
+     */
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
@@ -29,6 +32,9 @@ class SecondFragment : Fragment() {
 
     }
 
+    /**
+     *
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,6 +43,9 @@ class SecondFragment : Fragment() {
         }
     }
 
+    /**
+     *
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
