@@ -20,7 +20,7 @@ class SecondFragment : Fragment() {
     private val binding get() = _binding!!
 
     /**
-     *
+     * Called to have the fragment instantiate its user interface view.
      */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +33,7 @@ class SecondFragment : Fragment() {
     }
 
     /**
-     *
+     *  Inflate the view hierarchy and bind the object to it by using the inflate() method of the binding class.
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,7 +44,7 @@ class SecondFragment : Fragment() {
     }
 
     /**
-     *
+     * Allows the fragment to clean up resources associated with its View.
      */
     override fun onDestroyView() {
         super.onDestroyView()

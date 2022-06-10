@@ -23,6 +23,7 @@ import java.util.*
  * A simple [Fragment] subclass.
  * Use the [Register.newInstance] factory method to
  * create an instance of this fragment.
+ * Handling register
  */
 class Register : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
@@ -30,12 +31,20 @@ class Register : Fragment() {
     private lateinit var mAuth: FirebaseAuth
     private val binding get() = _binding!!
 
+
+    /**
+     * Called when the activity will start interacting with the user.
+     * Hide the action bar.
+     */
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
 
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,15 +57,23 @@ class Register : Fragment() {
         return binding.root
     }
 
+    /**
+     * Called immediately after onCreateView has returned, but before any saved state has been restored in to the view.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         Log.i("MyActivity", "MyClass.getView() — get item number")
+        /**
+         * When register button was clicked
+         */
         binding.registerBtn.setOnClickListener { view ->
             val username = binding.editTextTextUsername.text.toString()
             val email = binding.editTextTextEmailAddress.text.toString()
             val password = binding.editTextTextPassword.text.toString()
 
+            /**
+             * if validate pass, create user
+             */
             if (validate(email, "email")) {
                 createUser(username, email, password)
             } else {
@@ -69,7 +86,7 @@ class Register : Fragment() {
     }
 
     /**
-     *
+     * Handling create user
      */
     private fun createUser(username: String, email: String, password: String) {
         val unixTime: String = Instant.now().getEpochSecond().toString()
@@ -83,14 +100,17 @@ class Register : Fragment() {
         } else if (TextUtils.isEmpty(password)) {
             Toast.makeText(requireActivity(), "Password cannot be empty", Toast.LENGTH_SHORT).show()
         } else {
-            // insert record into mongodb
-
+            /**
+             * insert record into firebase cloud store
+             */
             val user = hashMapOf(
                 "username" to username,
                 "email" to email,
                 "createTime" to unixTime
             )
-            // Add a new document with a generated ID
+            /**
+             * Add a new document with a generated ID
+             */
             db.collection("users")
                 .add(user)
                 .addOnSuccessListener { documentReference ->
@@ -100,8 +120,13 @@ class Register : Fragment() {
                     Log.w(TAG, "Error adding document", e)
                 }
 
-            // create user in firebase
+            /**
+             * Create user in firebase
+             */
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                /**
+                 * handling registered successfully
+                 */
                 if (task.isSuccessful) {
                     Toast.makeText(
                         requireActivity(),
@@ -111,6 +136,9 @@ class Register : Fragment() {
                     findNavController().navigate(R.id.action_RegisterFragment_to_LoginFragment)
 
                 } else {
+                    /**
+                     * handling registered failed
+                     */
                     Toast.makeText(
                         requireActivity(),
                         "Registration Error",
@@ -121,6 +149,9 @@ class Register : Fragment() {
         }
     }
 
+    /**
+     * Valid the format of email
+     */
     private fun validate(text: String, type: String): Boolean {
         if (type === "email") {
             return !TextUtils.isEmpty(text) && android.util.Patterns.EMAIL_ADDRESS.matcher(text)

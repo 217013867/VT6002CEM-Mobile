@@ -10,7 +10,10 @@ import com.example.fishing.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
-
+/**
+ * Base class for activities that wish to use some of the newer platform features on older Android devices.
+ * Handing action bar
+ */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -37,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * This method is called whenever the user chooses to navigate Up within application's activity hierarchy from the action bar.
+     */
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
