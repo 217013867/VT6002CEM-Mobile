@@ -29,7 +29,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 
 /**
- *
+ * Home Page- fish classification
  */
 class HomeFragment : Fragment() {
 
@@ -43,19 +43,15 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
     private val binding get() = _binding!!
 
     /**
      *
+     * Request camera permission for using camera of the device.
+     * The result of the permission request is handled by a callback, onRequestPermissionsResult
      */
     private fun checkAndGetPermissions() {
-        /*
- * Request camera permission, so that we can use camera of the
- * device. The result of the permission request is handled by a callback,
- * onRequestPermissionsResult.
- */
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.CAMERA
@@ -78,7 +74,8 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     *
+     *This interface is the contract for receiving the results for permission requests.
+     * If passed, camera permission granted. Otherwise, permission denied.
      */
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -97,7 +94,8 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     *
+     * Called to have the fragment instantiate its user interface view.
+     * In this case, Home fragment was instantiated.
      */
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -112,7 +110,8 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     *
+     * Called when the fragment's activity has been created and this fragment's view hierarchy instantiated.
+     * This part mainly handle the fish classification.
      */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -123,7 +122,9 @@ class HomeFragment : Fragment() {
         text_view = binding.textViewPredict
         camerabtn = binding.buttonCamera
 
-        // handling permissions
+        /**
+         * handling permissions
+         */
         checkAndGetPermissions()
 
         var data = ""
@@ -131,6 +132,9 @@ class HomeFragment : Fragment() {
         var inputStream: InputStream? = null
         lateinit var labels: List<String>
 
+        /**
+         * Assign label.txt to input stream
+         */
         try {
             inputStream = assetManager.open("label.txt")
             val buf = StringBuilder()
@@ -147,6 +151,9 @@ class HomeFragment : Fragment() {
             e.printStackTrace()
         }
 
+        /**
+         * Handling select image from device
+         */
         select_image_button.setOnClickListener(View.OnClickListener {
             Log.d("mssg", "button pressed")
             val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -155,6 +162,10 @@ class HomeFragment : Fragment() {
             startActivityForResult(intent, 250)
         })
 
+        /**
+         * Handling Fish classification
+         * Resize the imported image to 224 * 224 for better watch
+         */
         make_prediction.setOnClickListener(View.OnClickListener {
             val resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
             val model = MobilenetV110224Quant.newInstance(requireActivity())
@@ -162,12 +173,16 @@ class HomeFragment : Fragment() {
             val tbuffer = TensorImage.fromBitmap(resized)
             val byteBuffer = tbuffer.buffer
 
-            // Creates inputs for reference.
+            /**
+             * Creates inputs for reference.
+             */
             val inputFeature0 =
                 TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.UINT8)
             inputFeature0.loadBuffer(byteBuffer)
 
-            // Runs model inference and gets result.
+            /**
+             * Runs model inference and gets result.
+             */
             val outputs = model.process(inputFeature0)
             val outputFeature0 = outputs.outputFeature0AsTensorBuffer
 
@@ -177,10 +192,16 @@ class HomeFragment : Fragment() {
             Log.d("max", max.toString())
             text_view.text = labels[max]
 
-            // Releases model resources if no longer used.
+            /**
+             * Releases model resources if no longer used.
+             */
+
             model.close()
         })
 
+        /**
+         * Handling taking image
+         */
         camerabtn.setOnClickListener(View.OnClickListener {
             val camera: Intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(camera, 200)
@@ -189,7 +210,8 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     *
+     * Show the result after the onActivityCreated
+     * Show the fish classification result
      */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -207,7 +229,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     *
+     * Allows the fragment to clean up resources associated with its View.
      */
     override fun onDestroyView() {
         super.onDestroyView()
@@ -215,7 +237,7 @@ class HomeFragment : Fragment() {
     }
 
     /**
-     *
+     * Get the Max value
      */
     fun getMax(arr: FloatArray): Int {
         var ind = 0

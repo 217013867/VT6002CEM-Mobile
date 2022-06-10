@@ -27,9 +27,11 @@ class Login : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+
+    /**
+     * Assign firebaseAuth to mAuth
+     */
     private lateinit var mAuth: FirebaseAuth
 
     private lateinit var executor: Executor
@@ -37,6 +39,10 @@ class Login : Fragment() {
     private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
 
+    /**
+     * Called when the activity will start interacting with the user.
+     * Handing fingerprint authentication.
+     */
     override fun onResume() {
         super.onResume()
         val biometricStatusTextView = binding.biometricStatus
@@ -56,12 +62,21 @@ class Login : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
 
+    /**
+     * Called when the fragment's activity has been created and this fragment's view hierarchy instantiated.
+     * In this case, it will handing Biometric authentication
+     */
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         executor = ContextCompat.getMainExecutor(requireContext())
 
-        biometricPrompt = BiometricPrompt(requireActivity(), executor,
+        biometricPrompt = BiometricPrompt(
+            requireActivity(), executor,
             object : BiometricPrompt.AuthenticationCallback() {
+                /**
+                 * Handing fingerprint authentication error
+                 * And display Authentication error message
+                 */
                 override fun onAuthenticationError(
                     errorCode: Int,
                     errString: CharSequence
@@ -74,6 +89,10 @@ class Login : Fragment() {
                         .show()
                 }
 
+                /**
+                 * Handing fingerprint authentication succeeded
+                 * And display Authentication succeeded message
+                 */
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult
                 ) {
@@ -86,6 +105,10 @@ class Login : Fragment() {
                         .show()
                 }
 
+                /**
+                 * Handing fingerprint authentication succeeded
+                 * And display Authentication failed message
+                 */
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Toast.makeText(
@@ -109,6 +132,9 @@ class Login : Fragment() {
         }
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -120,15 +146,24 @@ class Login : Fragment() {
         return binding.root
     }
 
+    /**
+     * Handing user & password login
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /**
+         * When longin button was clicked
+         */
         binding.loginBtn.setOnClickListener {
 
             // connect to firebase
             val email: String = binding.editTextTextEmailAddress.text.toString()
             val password: String = binding.editTextTextPassword.text.toString()
 
+            /**
+             * Email and Password should be empty
+             */
             if (TextUtils.isEmpty(email)) {
                 Toast.makeText(requireActivity(), "Email cannot be empty", Toast.LENGTH_SHORT)
                     .show()
@@ -137,6 +172,9 @@ class Login : Fragment() {
                     .show()
             } else {
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    /**
+                     * Handling login succeeded
+                     */
                     if (task.isSuccessful) {
                         Toast.makeText(
                             requireActivity(),
@@ -145,6 +183,9 @@ class Login : Fragment() {
                         ).show()
                         startActivity(Intent(requireActivity(), Home::class.java))
                     } else {
+                        /**
+                         * Login error
+                         */
                         Toast.makeText(
                             requireActivity(),
                             "Log in Error",
@@ -154,16 +195,20 @@ class Login : Fragment() {
                 }
             }
         }
-
+        /**
+         * Navigate to a destination
+         */
         binding.tvRegisterHere.setOnClickListener { view ->
             findNavController().navigate(R.id.action_LoginFragment_to_RegisterFragment)
         }
     }
 
+    /**
+     * Allows the fragment to clean up resources associated with its View.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }

@@ -24,28 +24,46 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-
+/**
+ * Map Page- show fishing location and navigation
+ */
 class MapsFragment : Fragment() {
 
-    // The entry point to the Fused Location Provider.
+    /**
+     * The entry point to the Fused Location Provider.
+     */
+
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
+    /**
+     * Use Google Map as mapping system
+     */
     private var map: GoogleMap? = null
 
     private var client: FusedLocationProviderClient? = null
 
-    // hk
+    /**
+     * Assign Hong Kong as default location.
+     */
     private val defaultLocation = LatLng(22.357648, 114.154229)
 
+    /**
+     * Set default location permission are flase
+     */
     private var locationPermissionGranted: Boolean = false
 
     private var lastKnownLocation: Location? = null
 
+
     private val callback = OnMapReadyCallback { googleMap: GoogleMap ->
         this.map = googleMap
 
+        /**
+         * Get the fishing location stored in firebase (collection name : fishing-point)
+         * if succeeded, add the fishing points to the map
+         * if fail, log error getting documents message
+         */
         val db = Firebase.firestore
-
         db.collection("fishing-point")
             .get()
             .addOnSuccessListener { result ->
@@ -66,22 +84,34 @@ class MapsFragment : Fragment() {
                 Log.w("TAG", "Error getting documents.", exception)
             }
 
-        // Turn on the My Location layer and the related control on the map.
+        /**
+         *  Turn on the My Location layer and the related control on the map.
+         */
         updateLocationUI()
 
-        // Get the current location of the device and set the position of the map.
+        /**
+         * Get the current location of the device and set the position of the map.
+         */
         getDeviceLocation()
     }
 
+    /**
+     * Called to do initial creation of a fragment.
+     * Create a new instance of FusedLocationProviderClient for use in an Activity.
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
 
     }
 
+    /**
+     *
+     * Called to have the fragment instantiate its user interface view.
+     * In this case, map fragment was instantiated.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -94,13 +124,15 @@ class MapsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
+    /**
+     * Request location permission, so that we can get the location of the device.
+     * The result of the permission request is handled by a callback, onRequestPermissionsResult.
+     */
     private fun getLocationPermission() {
-        /*
-         * Request location permission, so that we can get the location of the
-         * device. The result of the permission request is handled by a callback,
-         * onRequestPermissionsResult.
+
+        /**
+         *  check condition.
          */
-        // check condition
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission
@@ -116,11 +148,15 @@ class MapsFragment : Fragment() {
             == PackageManager
                 .PERMISSION_GRANTED
         ) {
-            // When permission is granted
+            /**
+             * When permission is granted
+             */
             locationPermissionGranted = true
         } else {
-            // When permission is not granted
-            // Call method
+            /**
+             * When permission is not granted
+             * Call method
+             */
             requestPermissions(
                 arrayOf(
                     Manifest.permission
@@ -132,6 +168,10 @@ class MapsFragment : Fragment() {
         }
     }
 
+    /**
+     *This interface is the contract for receiving the results for permission requests.
+     * If passed, get current user location permission granted. Otherwise, permission denied.
+     */
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
@@ -141,17 +181,23 @@ class MapsFragment : Fragment() {
             requestCode, permissions, grantResults
         )
         locationPermissionGranted = false
-        // Check condition
+        /***
+         * Check condition
+         */
         if (requestCode == 100 && grantResults.isNotEmpty()
             && (grantResults[0] + grantResults[1]
                     == PackageManager.PERMISSION_GRANTED)
 
         ) {
-            // When permission are granted
+            /**
+             * When permission are granted
+             */
             locationPermissionGranted = true
         } else {
-            // When permission are denied
-            // Display toast
+            /**
+             * When permission are denied
+             * Display toast
+             */
             Toast
                 .makeText(
                     requireActivity(),
@@ -163,6 +209,9 @@ class MapsFragment : Fragment() {
     }
 
 
+    /**
+     * Indicates that Lint should ignore the specified warnings for the annotated element.
+     */
     @SuppressLint("MissingPermission")
     private fun updateLocationUI() {
         if (map == null) {
@@ -183,11 +232,13 @@ class MapsFragment : Fragment() {
         }
     }
 
+    /**
+     * Indicates that Lint should ignore the specified warnings for the annotated element.
+     */
     @SuppressLint("MissingPermission")
     private fun getDeviceLocation() {
-        /*
-         * Get the best and most recent location of the device, which may be null in rare
-         * cases when a location is not available.
+        /**
+         * Get the best and most recent location of the device, which may be null in rare cases when a location is not available.
          */
         try {
             Log.d("locationPermissionGrant", locationPermissionGranted.toString())
@@ -197,11 +248,11 @@ class MapsFragment : Fragment() {
                     Log.d("task.isSuccessful", task.isSuccessful.toString())
                     Log.d("task", task.toString())
                     if (task.isSuccessful) {
-                        // Set the map's camera position to the current location of the device.
+                        /**
+                         * Set the map's camera position to the current location of the device.
+                         */
                         lastKnownLocation = task.result
-
                         Log.d("LOCATION: ", lastKnownLocation.toString())
-
                         if (lastKnownLocation != null) {
                             map?.moveCamera(
                                 CameraUpdateFactory.newLatLngZoom(
@@ -235,12 +286,20 @@ class MapsFragment : Fragment() {
         }
     }
 
+    /**
+     * Called immediately after onCreateView(android.view.LayoutInflater,
+     * android.view.ViewGroup, android.os.Bundle) has returned,
+     * but before any saved state has been restored in to the view.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
+    /**
+     * Set the zoom level of the map
+     */
     companion object {
         private const val DEFAULT_ZOOM = 10
     }
