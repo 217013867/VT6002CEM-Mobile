@@ -88,7 +88,7 @@ class Register : Fragment() {
     /**
      * Handling create user
      */
-    private fun createUser(username: String, email: String, password: String) {
+    fun createUser(username: String, email: String, password: String) {
         val unixTime: String = Instant.now().getEpochSecond().toString()
 
         println(binding.editTextTextEmailAddress.text)
@@ -149,14 +149,14 @@ class Register : Fragment() {
         }
     }
 
-    /**
-     * Valid the format of email
-     */
-    private fun validate(text: String, type: String): Boolean {
+    fun validate(text: String, type: String): Boolean {
+        print("'@@@@@'")
         if (type === "email") {
+            print(type)
             return !TextUtils.isEmpty(text) && android.util.Patterns.EMAIL_ADDRESS.matcher(text)
                 .matches();
         } else {
+            print("'@@@@@'")
             return false
         }
     }

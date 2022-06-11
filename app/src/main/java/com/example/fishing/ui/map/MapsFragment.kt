@@ -128,7 +128,7 @@ class MapsFragment : Fragment() {
      * Request location permission, so that we can get the location of the device.
      * The result of the permission request is handled by a callback, onRequestPermissionsResult.
      */
-    private fun getLocationPermission() {
+    fun getLocationPermission() {
 
         /**
          *  check condition.
@@ -213,7 +213,7 @@ class MapsFragment : Fragment() {
      * Indicates that Lint should ignore the specified warnings for the annotated element.
      */
     @SuppressLint("MissingPermission")
-    private fun updateLocationUI() {
+    fun updateLocationUI() {
         if (map == null) {
             return
         }
@@ -236,7 +236,7 @@ class MapsFragment : Fragment() {
      * Indicates that Lint should ignore the specified warnings for the annotated element.
      */
     @SuppressLint("MissingPermission")
-    private fun getDeviceLocation() {
+    fun getDeviceLocation() {
         /**
          * Get the best and most recent location of the device, which may be null in rare cases when a location is not available.
          */

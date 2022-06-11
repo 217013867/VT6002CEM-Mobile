@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
      * Request camera permission for using camera of the device.
      * The result of the permission request is handled by a callback, onRequestPermissionsResult
      */
-    private fun checkAndGetPermissions() {
+    fun checkAndGetPermissions() {
         if (ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.CAMERA
