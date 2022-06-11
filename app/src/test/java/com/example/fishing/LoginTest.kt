@@ -42,8 +42,6 @@ class LoginTest(val context: Context) {
         val userId = "A12345678"
         val preKey = "USER_ID"
 
-        val repository = Login(context)
-        //verify is the method call
         Mockito.verify(sharedPrefsEditor).putString(
             Mockito.argThat { key -> key == preKey },
             Mockito.argThat { value -> value == userId })

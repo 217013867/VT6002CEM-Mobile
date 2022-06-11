@@ -1,6 +1,5 @@
 package com.example.fishing
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -24,7 +23,7 @@ import java.util.concurrent.Executor
 /**`
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class Login(context: Context) : Fragment() {
+class Login : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
 

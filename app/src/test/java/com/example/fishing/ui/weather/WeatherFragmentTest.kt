@@ -1,9 +1,7 @@
 package com.example.fishing.ui.weather
 
 import com.google.type.DateTime
-import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Test
 import org.mockito.Mockito
 import java.util.*
 
@@ -19,9 +17,5 @@ class WeatherFragmentTest {
         val dt = Mockito.mock(DateTime::class.java)
     }
 
-    @Test
-    fun someTest() {
-        val doubleTime: Long = WeatherFragmentTest!!.getDoubleTime()
-        assertEquals(60, doubleTime)
-    }
+
 }

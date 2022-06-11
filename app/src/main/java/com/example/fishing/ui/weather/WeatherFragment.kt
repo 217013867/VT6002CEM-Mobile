@@ -229,9 +229,5 @@ class WeatherFragment : Fragment() {
             requestQueue.add(stringRequest)
         }
     }
-
-    fun getDoubleTime(): Long {
-        return Date().time * 2
-    }
 }
 

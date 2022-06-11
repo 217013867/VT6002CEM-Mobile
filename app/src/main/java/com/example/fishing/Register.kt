@@ -150,13 +150,13 @@ class Register : Fragment() {
     }
 
     fun validate(text: String, type: String): Boolean {
-        print("'@@@@@'")
+        print("'@'")
         if (type === "email") {
             print(type)
             return !TextUtils.isEmpty(text) && android.util.Patterns.EMAIL_ADDRESS.matcher(text)
                 .matches();
         } else {
-            print("'@@@@@'")
+            print("'@'")
             return false
         }
     }
