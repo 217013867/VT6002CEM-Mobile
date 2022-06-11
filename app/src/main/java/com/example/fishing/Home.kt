@@ -89,7 +89,7 @@ class Home : AppCompatActivity() {
     /**
      * Log out the application
      */
-    private fun logout() {
+    fun logout() {
         mAuth.signOut()
     }
 }

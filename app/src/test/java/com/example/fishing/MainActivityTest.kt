@@ -1,25 +1,21 @@
 package com.example.fishing
 
-import org.junit.Before
+import androidx.navigation.testing.TestNavHostController
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.matcher.ViewMatchers
 import org.junit.Test
-import org.mockito.Mockito.spy
-import org.mockito.Mockito.verify
 
 class MainActivityTest {
     @Test
-    fun onCreate() {
-        lateinit var mainActivitySpy: MainActivity
+    fun testNavigationToMain() {
+        // Create a TestNavHostController
+        val navController = TestNavHostController(
+            ApplicationProvider.getApplicationContext()
+        )
 
-        @Before
-        fun setUp() {
-            mainActivitySpy = spy(MainActivity())
-        }
-
-        @Test
-        fun `Test case`() {
-            mainActivitySpy.onCreate(TODO())
-
-            verify(mainActivitySpy).finish()
-        }
+        // Verify that performing a click changes the NavController’s state
+        onView(ViewMatchers.withId(R.id.toolbar)).perform(ViewActions.click())
     }
 }
