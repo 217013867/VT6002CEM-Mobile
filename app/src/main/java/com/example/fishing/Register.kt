@@ -1,6 +1,7 @@
 package com.example.fishing
 
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -88,6 +90,7 @@ class Register : Fragment() {
     /**
      * Handling create user
      */
+    @RequiresApi(Build.VERSION_CODES.O)
     fun createUser(username: String, email: String, password: String) {
         val unixTime: String = Instant.now().getEpochSecond().toString()
 
